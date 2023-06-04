@@ -270,15 +270,17 @@ class _SearchBarState extends State<SearchBar> {
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                 children: List.generate(_searchResults.length, (index) {
-                  return MealCardSearch(
-                    Food_id: _searchResults[index]['Food_id'],
-                    image: _searchResults[index]['image'],
-                    foodName: _searchResults[index]['Food_name'],
-                    unit:_searchResults[index]['measuring_unit'],
-                    cal: _searchResults[index]
-                        ['food_calories_per_preferred_serving'],
-
-                  );
+                  if (_searchResults.isNotEmpty ) {
+                    return MealCardSearch(
+                      Food_id: _searchResults[index]['Food_id'],
+                      image: _searchResults[index]['image']?? ''  ,
+                      foodName: _searchResults[index]['Food_name'] ,
+                      unit: _searchResults[index]['measuring_unit'],
+                      cal: _searchResults[index]['food_calories_per_preferred_serving'].toDouble() ,
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
                 })),
           ],
         ),
@@ -340,7 +342,7 @@ class _SearchBarState extends State<SearchBar> {
 
 class MealCardSearch extends StatefulWidget {
   final String foodName;
-  final int cal;
+  final double cal;
 
   final String image;
   final int Food_id;
@@ -471,10 +473,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
       foodName = words.join(" ");
     }
 
-
-
     return Container(
-
       padding: EdgeInsets.all(10),
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -490,11 +489,27 @@ class _MealCardSearchState extends State<MealCardSearch> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 AspectRatio(
-                  aspectRatio:2.5,
+                  aspectRatio:2.4,
                   child: ClipRRect(
                     child: Image.network(
                       widget.image,
                       fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context,
+                          Object exception,
+                          StackTrace? stackTrace) {
+                        return Container(
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: Text(
+                              'No image',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20)),
