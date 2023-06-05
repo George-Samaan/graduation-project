@@ -7,13 +7,25 @@ import 'navbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 class FinalDiet extends StatefulWidget {
   @override
   State<FinalDiet> createState() => _FinalDietState();
 }
 
 class _FinalDietState extends State<FinalDiet> {
+  num _totalCalories = 0;
+  TotaMealTypeCalories(String mealType) {
+    num sumCalories = 0;
+    List<dynamic> mealData = USERDATA['dietplan'][0][mealType];
+    for (var item in mealData) {
+      sumCalories +=
+          item['food_item']['food_calories_per_preferred_serving'] * item['n'];
+    }
+    setState(() {
+      _totalCalories = sumCalories.toInt();
+    });
+  }
+
   void getDataFromServer() async {
     try {
       setState(() {
@@ -23,7 +35,6 @@ class _FinalDietState extends State<FinalDiet> {
           await http.get(Uri.parse('${url}${USERDATA['_id']}/DietPlan'));
 
       if (response.statusCode == 200) {
-
         final data = json.decode(response.body);
         // process the data as needed
         print(data);
@@ -59,14 +70,17 @@ class _FinalDietState extends State<FinalDiet> {
           USERDATA['dietplan'][0]['breakfast'] != null) {
         mealData = List<Map<String, dynamic>>.from(
             USERDATA['dietplan'][0]['breakfast']);
+        TotaMealTypeCalories(_selectedMealType);
       } else if (mealType == 'lunch' &&
           USERDATA['dietplan'][0]['lunch'] != null) {
         mealData =
             List<Map<String, dynamic>>.from(USERDATA['dietplan'][0]['lunch']);
+        // TotaMealTypeCalories(_selectedMealType);
       } else if (mealType == 'dinner' &&
           USERDATA['dietplan'][0]['dinner'] != null) {
         mealData =
             List<Map<String, dynamic>>.from(USERDATA['dietplan'][0]['dinner']);
+        // TotaMealTypeCalories(_selectedMealType);
       }
     }
     setState(() {
@@ -115,12 +129,13 @@ class _FinalDietState extends State<FinalDiet> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("No data available",
+                      Text(
+                        "No data available",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 22,
-                            fontWeight: FontWeight.w400
-                        ),),
+                            fontWeight: FontWeight.w400),
+                      ),
                       if (!_isDataAvailable)
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -128,31 +143,37 @@ class _FinalDietState extends State<FinalDiet> {
                             onPressed: () {
                               if (USERDATA['favbreakfast'].length < 3) {
                                 Fluttertoast.showToast(
-                                  msg: 'Please add more items to your breakfast section.',
+                                  msg:
+                                      'Please add more items to your breakfast section.',
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Color.fromRGBO(34, 40, 49, 1),
+                                  backgroundColor:
+                                      Color.fromRGBO(34, 40, 49, 1),
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
                               } else if (USERDATA['favlunch'].length < 3) {
                                 Fluttertoast.showToast(
-                                  msg: 'Please add more items to your lunch section.',
+                                  msg:
+                                      'Please add more items to your lunch section.',
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Color.fromRGBO(34, 40, 49, 1),
+                                  backgroundColor:
+                                      Color.fromRGBO(34, 40, 49, 1),
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
                               } else if (USERDATA['favdinner'].length < 3) {
                                 Fluttertoast.showToast(
-                                  msg: 'Please add more items to your dinner section.',
+                                  msg:
+                                      'Please add more items to your dinner section.',
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Color.fromRGBO(34, 40, 49, 1),
+                                  backgroundColor:
+                                      Color.fromRGBO(34, 40, 49, 1),
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
@@ -196,6 +217,7 @@ class _FinalDietState extends State<FinalDiet> {
                             _loadMealData('breakfast');
                             setState(() {
                               _selectedMealType = 'breakfast';
+                              TotaMealTypeCalories('breakfast');
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -234,6 +256,7 @@ class _FinalDietState extends State<FinalDiet> {
                             _loadMealData('lunch');
                             setState(() {
                               _selectedMealType = 'lunch';
+                              TotaMealTypeCalories('lunch');
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -269,6 +292,7 @@ class _FinalDietState extends State<FinalDiet> {
                             _loadMealData('dinner');
                             setState(() {
                               _selectedMealType = 'dinner';
+                              TotaMealTypeCalories('dinner');
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -301,14 +325,43 @@ class _FinalDietState extends State<FinalDiet> {
                         ),
                       ],
                     ),
-                    // i want to print here total calories of this section
-                    // Row(
-                    //   children: [
-                    //     Text('data')
-                    //   ],
-                    // ),
-                    SizedBox(height: 30),
-
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 30),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(0, 173, 181, 1),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 19, horizontal: 35),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            Text(
+                              '${_totalCalories.toStringAsFixed(0)} Kcal',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.white,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(
                         itemCount: _mealData.length,
@@ -402,21 +455,18 @@ class _FinalDietState extends State<FinalDiet> {
                                         ),
                                         SizedBox(height: 10),
                                         Text(
-                                            'Amount: ${_mealData[index]['food_item']['preferred_serving'] *
-                                                double.parse(_mealData[index]['n'].toInt().toString())} '
+                                            'Amount: ${_mealData[index]['food_item']['preferred_serving'].toInt() * double.parse(_mealData[index]['n'].toInt().toString())} '
                                             '${_mealData[index]['food_item']['measuring_unit']}',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500)),
                                         SizedBox(height: 4),
                                         Text(
-                                            'Calories: ${_mealData[index]['food_item']['food_calories_per_preferred_serving']
-                                                * _mealData[index]['n'].toInt()}' +
+                                            'Calories: ${_mealData[index]['food_item']['food_calories_per_preferred_serving'].toInt() * _mealData[index]['n'].toInt()}' +
                                                 ' Kcal',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500)),
-
                                       ],
                                     ),
                                   ),
@@ -438,7 +488,8 @@ class _FinalDietState extends State<FinalDiet> {
 
                           if (USERDATA['favbreakfast'].length < 3) {
                             Fluttertoast.showToast(
-                              msg: 'Please add more items to your breakfast section.',
+                              msg:
+                                  'Please add more items to your breakfast section.',
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
@@ -448,7 +499,8 @@ class _FinalDietState extends State<FinalDiet> {
                             );
                           } else if (USERDATA['favlunch'].length < 3) {
                             Fluttertoast.showToast(
-                              msg: 'Please add more items to your lunch section.',
+                              msg:
+                                  'Please add more items to your lunch section.',
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
@@ -458,7 +510,8 @@ class _FinalDietState extends State<FinalDiet> {
                             );
                           } else if (USERDATA['favdinner'].length < 3) {
                             Fluttertoast.showToast(
-                              msg: 'Please add more items to your dinner section.',
+                              msg:
+                                  'Please add more items to your dinner section.',
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
@@ -483,11 +536,10 @@ class _FinalDietState extends State<FinalDiet> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide(
-                              color: Color.fromRGBO(57, 62, 70, 1),
-                              width: 2),
+                              color: Color.fromRGBO(57, 62, 70, 1), width: 2),
                         ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 22, vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 22, vertical: 15),
                       ),
                     ),
                   ],
