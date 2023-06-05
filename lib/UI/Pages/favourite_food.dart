@@ -331,7 +331,7 @@ class _FavFoodState extends State<FavFood> {
                             _mealData[index]['image'].toString(),
                             width: 150,
                             height: 120,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             errorBuilder: (BuildContext context,
                                 Object exception, StackTrace? stackTrace) {
                               return Container(

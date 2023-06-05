@@ -149,7 +149,7 @@ class _SearchBarState extends State<SearchBar> {
               elevation: 0,
               minWidth: 0,
               height: 36,
-              padding: EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
               color: _selectedButton == 0?
               Color.fromRGBO(0, 173, 181, 1): Colors.grey.shade300,
               child: Text(

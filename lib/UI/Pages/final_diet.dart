@@ -364,7 +364,7 @@ class _FinalDietState extends State<FinalDiet> {
                                         .toString(),
                                     width: 150,
                                     height: 120,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                     errorBuilder: (BuildContext context,
                                         Object exception,
                                         StackTrace? stackTrace) {
@@ -403,7 +403,7 @@ class _FinalDietState extends State<FinalDiet> {
                                         SizedBox(height: 10),
                                         Text(
                                             'Amount: ${_mealData[index]['food_item']['preferred_serving'] *
-                                                double.parse(_mealData[index]['n'].toString())} '
+                                                double.parse(_mealData[index]['n'].toInt().toString())} '
                                             '${_mealData[index]['food_item']['measuring_unit']}',
                                             style: TextStyle(
                                                 fontSize: 15,
@@ -411,7 +411,7 @@ class _FinalDietState extends State<FinalDiet> {
                                         SizedBox(height: 4),
                                         Text(
                                             'Calories: ${_mealData[index]['food_item']['food_calories_per_preferred_serving']
-                                                * _mealData[index]['n']}' +
+                                                * _mealData[index]['n'].toInt()}' +
                                                 ' Kcal',
                                             style: TextStyle(
                                                 fontSize: 15,
