@@ -13,6 +13,7 @@ class FinalDiet extends StatefulWidget {
 }
 
 class _FinalDietState extends State<FinalDiet> {
+
   num _totalCalories = 0;
   TotaMealTypeCalories(String mealType) {
     num sumCalories = 0;
@@ -23,6 +24,7 @@ class _FinalDietState extends State<FinalDiet> {
     }
     setState(() {
       _totalCalories = sumCalories.toInt();
+      print(sumCalories);
     });
   }
 
@@ -455,8 +457,8 @@ class _FinalDietState extends State<FinalDiet> {
                                         ),
                                         SizedBox(height: 10),
                                         Text(
-                                            'Amount: ${_mealData[index]['food_item']['preferred_serving'].toInt() * double.parse(_mealData[index]['n'].toInt().toString())} '
-                                            '${_mealData[index]['food_item']['measuring_unit']}',
+                                            'Amount: ${(_mealData[index]['food_item']['preferred_serving'] * _mealData[index]['n'].toDouble()).toStringAsFixed(1)}'
+                                            ' ' '${_mealData[index]['food_item']['measuring_unit']}',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500)),
