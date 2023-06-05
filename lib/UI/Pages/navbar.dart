@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_authentication_2/UI/Pages/favourite_food.dart';
 import 'package:login_authentication_2/UI/Pages/final_diet.dart';
@@ -19,27 +20,53 @@ class NavBar extends StatelessWidget {
       // Display alert dialog
       bool confirmLogout = await showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Confirm Logout"),
-          content: Text("Are you sure you want to log out?"),
-          actions: [
-            TextButton(
-              child: Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-            TextButton(
-              child: Text("Yes"),
-              onPressed: () {
-
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-        ),
+        builder: (context) {
+           if (Platform.isIOS) {
+            // Show iOS-style alert dialog
+            return CupertinoAlertDialog(
+              title: Text("Confirm Logout"),
+              content: Text("Are you sure you want to log out?"),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: Text("Yes"),
+                  isDestructiveAction: true,
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            );
+          } else {
+            // Platform not recognized, return null
+            return AlertDialog(
+              title: Text("Confirm Logout"),
+              content: Text("Are you sure you want to log out?"),
+              actions: [
+                TextButton(
+                  child: Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+                TextButton(
+                  child: Text("Yes",style: TextStyle(
+                    color: Colors.red
+                  ),),
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            );
+          }
+        },
       );
-
       // If user confirmed logout, clear SharedPreferences and navigate to login screen
       if (confirmLogout == true) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -52,10 +79,11 @@ class NavBar extends StatelessWidget {
         );
       }
     }
+
     return ClipRRect(
       borderRadius: BorderRadius.horizontal(right: Radius.circular(35)),
       child: Drawer(
-        width: 225,
+        width: 245,
         backgroundColor:Colors.white ,
         child: ListView (
           padding: EdgeInsets.only(top: 200,bottom: 100),
@@ -289,24 +317,52 @@ class NavBar extends StatelessWidget {
               onTap: () async {
                 bool confirmExit = await showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Confirm Exit"),
-                    content: Text("Are you sure you want to exit?"),
-                    actions: [
-                      TextButton(
-                        child: Text("No"),
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        },
-                      ),
-                      TextButton(
-                        child: Text("Yes"),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
-                    ],
-                  ),
+                  builder: (context) {
+                      if (Platform.isIOS) {
+                      // Show iOS-style alert dialog
+                      return CupertinoAlertDialog(
+                        title: Text("Confirm Exit"),
+                        content: Text("Are you sure you want to exit?"),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: Text("No"),
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: Text("Yes"),
+                            isDestructiveAction: true,
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                            },
+                          ),
+                        ],
+                      );
+                    } else {
+                      // Platform not recognized, show default alert dialog
+                      return AlertDialog(
+                        title: Text("Confirm Exit"),
+                        content: Text("Are you sure you want to exit?"),
+                        actions: [
+                          TextButton(
+                            child: Text("No"),
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                          ),
+                          TextButton(
+                            child: Text("Yes",style: TextStyle(
+                              color: Colors.red
+                            ),),
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 );
                 if (confirmExit == true) {
                   if (Platform.isAndroid || Platform.isIOS) {
@@ -314,7 +370,6 @@ class NavBar extends StatelessWidget {
                   }
                 }
               },
-
             ),
           ],
         ),

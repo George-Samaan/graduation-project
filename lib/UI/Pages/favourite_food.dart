@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../shared.dart';
 import 'navbar.dart';
@@ -244,25 +246,48 @@ class _FavFoodState extends State<FavFood> {
                     final bool shouldDelete = await showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Confirm'),
-                          content: Text(
-                              'Are you sure you want to delete it?'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                removeFood(_selectedMealType.toString(),
-                                    _mealData[index]['Food_id']);
-                                Navigator.of(context).pop(true);
-                              },
-                              child: Text('Delete'),
-                            ),
-                          ],
-                        );
+                        if (Platform.isIOS) {
+                          return CupertinoAlertDialog(
+                            title: Text('Confirm'),
+                            content: Text('Are you sure you want to delete it?'),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.of(context).pop(false),
+                                child: Text('Cancel'),
+                              ),
+                              CupertinoDialogAction(
+                                onPressed: () {
+                                  removeFood(_selectedMealType.toString(),
+                                      _mealData[index]['Food_id']);
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text('Delete'),
+                                isDestructiveAction: true,
+                              ),
+                            ],
+                          );
+                        } else {
+                          return AlertDialog(
+                            title: Text('Confirm'),
+                            content: Text('Are you sure you want to delete it?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(false),
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  removeFood(_selectedMealType.toString(),
+                                      _mealData[index]['Food_id']);
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text('Delete',style: TextStyle(
+                                  color: Colors.red,
+                                ),),
+                              ),
+                            ],
+                          );
+                        }
                       },
                     );
                     return shouldDelete;
