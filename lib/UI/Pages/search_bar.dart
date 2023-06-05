@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_authentication_2/UI/Pages/navbar.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import '../shared.dart';
 
@@ -18,7 +17,6 @@ class _SearchBarState extends State<SearchBar> {
 
   bool _isSearching = false;
   String _previousSearchQuery = '';
-  bool _isSearchFieldEmpty = false;
 
 
 
@@ -83,7 +81,6 @@ class _SearchBarState extends State<SearchBar> {
             autofocus: true,
             onChanged: (value) {
               setState(() {
-                _isSearchFieldEmpty = value.isEmpty;
               });
             },
             decoration: InputDecoration(
@@ -105,7 +102,6 @@ class _SearchBarState extends State<SearchBar> {
                 onPressed: () {
                   _searchQuery.clear();
                   setState(() {
-                    _isSearchFieldEmpty = true;
                   });
                 },
               ),
@@ -458,7 +454,6 @@ class _MealCardSearchState extends State<MealCardSearch> {
 
 
     String foodName = widget.foodName;
-    List<String> words = foodName.split(" ");
 
 
     if (foodName.isNotEmpty) {
@@ -474,6 +469,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
     }
 
     return Container(
+
       padding: EdgeInsets.all(10),
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -489,7 +485,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 AspectRatio(
-                  aspectRatio:2.4,
+                  aspectRatio:2.1,
                   child: ClipRRect(
                     child: Image.network(
                       widget.image,
@@ -524,7 +520,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         Center(
                           child: Text(
@@ -536,7 +532,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
                           ),
                         ),
                         SizedBox(
-                          height: 4,
+                          height: 2,
                         ),
                         Center(
                           child: Text(
@@ -552,7 +548,7 @@ class _MealCardSearchState extends State<MealCardSearch> {
                             children: [
                               SizedBox(width: 52,),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 13,),
+                                padding: const EdgeInsets.symmetric(vertical: 11,),
                                 child: ElevatedButton(
                                   onPressed: (){
                                    // print(widget.Food_id);
