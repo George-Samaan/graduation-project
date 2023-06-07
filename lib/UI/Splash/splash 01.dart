@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_authentication_2/UI/Pages/profile_screen.dart';
 import 'package:login_authentication_2/UI/shared.dart';
@@ -48,42 +49,67 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
 
-  void  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text("Exit"),
-      onPressed:  () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.clear();
-        exit(0);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text("Continue"),
-      onPressed:  () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("OOPS"),
-      content: Text("Would you like to Exit the application? "),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context)
-      {
-        return alert;
-      },
-    );
-    print('object');
+  void showAlertDialog(BuildContext context) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      // show Cupertino-style dialog on iOS
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text("OOPS"),
+            content: Text("Would you like to Exit the application?"),
+            actions: [
+              CupertinoDialogAction(
+                child: Text("Continue",),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text('Exit'),
+                isDestructiveAction: true,
+                onPressed: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
+                  exit(0);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // show Material-style dialog on Android
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("OOPS"),
+            content: Text("Would you like to Exit the application?"),
+            actions: [
+              TextButton(
+                child: Text('Continue'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text("Exit",
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+                onPressed: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
+                  exit(0);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
 

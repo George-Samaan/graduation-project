@@ -22,7 +22,7 @@ class _FinalDietState extends State<FinalDiet> {
     }
     setState(() {
       _totalCalories = sumCalories.toInt();
-     print(sumCalories);
+      print(sumCalories);
     });
   }
 
@@ -346,16 +346,14 @@ class _FinalDietState extends State<FinalDiet> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '${_totalCalories.toStringAsFixed(0)} Kcal',
                               style: TextStyle(
                                   fontSize: 20.0,
                                   color: Colors.white,
-                                fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -456,7 +454,8 @@ class _FinalDietState extends State<FinalDiet> {
                                         SizedBox(height: 10),
                                         Text(
                                             'Amount: ${(_mealData[index]['food_item']['preferred_serving'] * _mealData[index]['n'].toDouble()).toStringAsFixed(1)}'
-                                            ' ' '${_mealData[index]['food_item']['measuring_unit']}',
+                                            ' '
+                                            '${_mealData[index]['food_item']['measuring_unit']}',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500)),
