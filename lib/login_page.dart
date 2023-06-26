@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:login_authentication_2/UI/Pages/profile_screen.dart';
-import 'package:login_authentication_2/UI/Splash/splash%2001.dart';
-import 'package:login_authentication_2/UI/Splash/splash00.dart';
-import 'package:login_authentication_2/UI/shared.dart';
-import 'package:login_authentication_2/questionnaire.dart';
-import 'package:login_authentication_2/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'UI/Splash/splash 01.dart';
+import 'UI/shared.dart';
+import 'register.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

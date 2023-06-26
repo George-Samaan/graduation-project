@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/login_page.dart';
-import 'package:login_authentication_2/register.dart';
+
+import '../../login_page.dart';
+import '../../register.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -73,13 +74,17 @@ class _SplashPageState extends State<SplashPage>
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          pageBuilder: (context, animation,
+                              secondaryAnimation) =>
+                              LoginScreen(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
                             var begin = Offset(1.0, 0.0);
                             var end = Offset.zero;
                             var curve = Curves.ease;
 
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
 
                             return SlideTransition(
                               position: animation.drive(tween),
@@ -112,13 +117,17 @@ class _SplashPageState extends State<SplashPage>
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => RegisterScreen(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          pageBuilder: (context, animation,
+                              secondaryAnimation) =>
+                              RegisterScreen(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
                             var begin = Offset(1.0, 0.0);
                             var end = Offset.zero;
                             var curve = Curves.ease;
 
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
 
                             return SlideTransition(
                               position: animation.drive(tween),

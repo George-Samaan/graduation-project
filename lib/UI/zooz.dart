@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/UI/Pages/navbar.dart';
-import 'package:login_authentication_2/model/meal.dart';
+import '../model/meal.dart';
+import 'Pages/navbar.dart';
 import 'shared.dart';
 
 class zooz extends StatefulWidget {

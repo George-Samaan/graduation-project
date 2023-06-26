@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:login_authentication_2/UI/Pages/navbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../shared.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
+import 'navbar.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -242,6 +244,7 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 
+
   Widget _buildSearchResults() {
     if (_searchResults.isEmpty) {
       return Container(
@@ -249,36 +252,52 @@ class _SearchBarState extends State<SearchBar> {
         child: Text(
           'Not found',
           style: TextStyle(
-              color: Colors.black,
-              fontSize: 22,
-              fontWeight: FontWeight.w400
+            color: Colors.black,
+            fontSize: 22,
+            fontWeight: FontWeight.w400,
           ),
         ),
       );
-    }  else {
+    } else {
       return SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                children: List.generate(_searchResults.length, (index) {
-                  if (_searchResults.isNotEmpty ) {
-                    return MealCardSearch(
-                      Food_id: _searchResults[index]['Food_id'],
-                      image: _searchResults[index]['image']?? ''  ,
-                      foodName: _searchResults[index]['Food_name'] ,
-                      unit: _searchResults[index]['measuring_unit'],
-                      cal: _searchResults[index]['food_calories_per_preferred_serving'].toDouble() ,
-                    );
-                  } else {
-                    return SizedBox.shrink();
-                  }
-                })),
-          ],
+        child: AnimationLimiter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: AnimationConfiguration.toStaggeredList(
+
+              duration: const Duration(milliseconds: 800),
+              childAnimationBuilder: (widget) => SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: widget,
+                ),
+              ),
+              children: [
+                GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  children: List.generate(_searchResults.length, (index) {
+                    if (_searchResults.isNotEmpty) {
+                      return MealCardSearch(
+                        Food_id: _searchResults[index]['Food_id'],
+                        image: _searchResults[index]['image'] ?? '',
+                        foodName: _searchResults[index]['Food_name'],
+                        unit: _searchResults[index]['measuring_unit'],
+                        cal: _searchResults[index]
+                        ['food_calories_per_preferred_serving']
+                            .toDouble(),
+                      );
+                    } else {
+                      return SizedBox.shrink();
+                    }
+                  }),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }

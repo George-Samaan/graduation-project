@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:login_authentication_2/UI/Pages/navbar.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import '../../components/profile_info.dart';
 import '../shared.dart';
-
+import 'navbar.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -14,12 +11,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
-
-
   @override
   Widget build(BuildContext context) {
-
-
     var now = DateTime.now();
     var x = now.year;
     var y = now.day;
@@ -48,7 +41,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: Colors.black, //change color on your need
         ),
       ),
-
       backgroundColor: Colors.white,
       body: //xk ? Center(child: CircularProgressIndicator()):
           Column(
@@ -67,17 +59,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       title: Column(
                         children: [
-                          SizedBox(height: 12,),
+                          SizedBox(
+                            height: 12,
+                          ),
                           Text(
-                            'Welcome,'' ${USERDATA['name']}' ?? "FAILED TO LOAD",
+                            'Welcome,' ' ${USERDATA['name']}' ??
+                                "FAILED TO LOAD",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.w900,
-
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             '${y}/${z}/${x}',
                             style: TextStyle(
@@ -89,20 +85,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 110,
-                    //   height: 110,
-                    //   child: ClipOval(
-                    //     child: Image.asset('assets/user.png'),
-                    //   ),
-                    // ),
-                    //Image.asset('assets/user.png'),
                   ],
                 ),
               ),
             ),
           ),
-
           Expanded(
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -110,269 +97,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 padding: const EdgeInsets.only(
                     top: 20, left: 40, right: 40, bottom: 20),
-                child: Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Gender',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                          ),
+                child: AnimationLimiter(
+                  child: Column(
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 800),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        verticalOffset: -40,
+                        child: FadeInAnimation(
+                          child: widget,
                         ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            //border: Border.all(color: Colors.white,),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    USERDATA['gender'] ??
-                                        "FAILED TO LOAD",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                      children: [
+                        UserInfo(
+                          title: 'Gender',
+                          value: USERDATA['gender'] ?? "FAILED TO LOAD",
+                        ),
+                        UserInfo(
+                          title: 'Weight',
+                          value: USERDATA['weight'].toString() + ' KG' ??
+                              "FAILED TO LOAD",
+                        ),
+                        UserInfo(
+                          title: 'Height',
+                          value: USERDATA['height'].toString() + ' CM' ??
+                              "FAILED TO LOAD",
+                        ),
+                        UserInfo(
+                          title: 'Age',
+                          value: USERDATA['age'].toString() ?? "FAILED TO LOAD",
+                        ),
+                        UserInfo(
+                          title: 'Calories',
+                          value:
+                              USERDATA['calories'].toInt().toString() + ' KCAL',
+                        ),
+                        UserInfo(
+                          title: 'Goal',
+                          value: USERDATA['goal'].toString() == '1'
+                              ? 'Lose Weight'
+                              : 'Gain Weight',
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Weight',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    USERDATA['weight'].toString() +
-                                            ' KG' ??
-                                        "FAILED TO LOAD",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Height',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                      USERDATA['height'].toString() +
-                                          ' CM' ??
-                                          "FAILED TO LOAD",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Age',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    USERDATA['age'].toString() ??
-                                        "FAILED TO LOAD",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Calories',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    USERDATA['calories'].toInt().toString() +
-                                        ' KCAL',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Goal',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(height: 7),
-                        Container(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(0, 173, 181, 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    USERDATA['goal'].toString() == '1'
-                                        ? 'Lose Weight'
-                                        : 'Gain Weight',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -382,4 +149,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-

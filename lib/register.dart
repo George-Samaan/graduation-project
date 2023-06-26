@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/password_validation.dart';
+
+import 'password_validation.dart';
 
 
 

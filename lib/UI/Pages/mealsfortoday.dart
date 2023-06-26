@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/UI/Pages/navbar.dart';
-import 'package:login_authentication_2/model/meal.dart';
+import '../../model/meal.dart';
 import '../shared.dart';
+import 'navbar.dart';
 
 
 class MealsForToday extends StatefulWidget {

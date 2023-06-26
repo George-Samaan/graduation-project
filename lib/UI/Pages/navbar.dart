@@ -1,13 +1,13 @@
 import 'dart:io';
+import 'package:flexa/UI/Pages/profile_screen.dart';
+import 'package:flexa/UI/Pages/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/UI/Pages/favourite_food.dart';
-import 'package:login_authentication_2/UI/Pages/final_diet.dart';
-import 'package:login_authentication_2/UI/Pages/profile_screen.dart';
-import 'package:login_authentication_2/UI/Pages/search_bar.dart';
-import 'package:login_authentication_2/UI/Splash/splash00.dart';
-import 'package:login_authentication_2/questionnaire.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../questionnaire.dart';
+import '../Splash/splash00.dart';
+import 'favourite_food.dart';
+import 'final_diet.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);

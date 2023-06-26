@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.login_authentication_2">
    <application
-        android:label="login_authentication_2"
+        android:label="Flexa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

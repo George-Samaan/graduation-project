@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:login_authentication_2/UI/Pages/profile_screen.dart';
-import 'package:login_authentication_2/UI/shared.dart';
-import 'package:login_authentication_2/questionnaire.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../questionnaire.dart';
+import '../Pages/profile_screen.dart';
+import '../shared.dart';
 import 'splash00.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -47,8 +46,6 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.dispose();
     super.dispose();
   }
-
-
   void showAlertDialog(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       // show Cupertino-style dialog on iOS
