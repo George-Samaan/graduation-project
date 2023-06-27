@@ -42,70 +42,67 @@ class _SSState extends State<SS> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/FF.jpg"),
-          //   fit: BoxFit.cover,
-          // ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/15.jpg',
-                width: 150.0,
-                height: 150.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+            Center(
+              child: Image.asset(
+                'assets/pdf-logo.png',
+                 width: 100.0,
+                 height: 100.0,
+                fit: BoxFit.cover ,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'FleXa',
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: const Text(
+                'FLEX',
                 style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromRGBO(0, 173, 181, 1),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: LinearProgressIndicator(
-                        value: _animationController.value,
-                        backgroundColor: Colors.grey[300],
-                        valueColor:
-                        const AlwaysStoppedAnimation<Color>(Color.fromRGBO(0, 173, 1181, 1)),
-                        minHeight: 10,
-                      ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100.0),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: LinearProgressIndicator(
+                      value: _animationController.value,
+                      backgroundColor: Colors.grey[300],
+                      valueColor:
+                      const AlwaysStoppedAnimation<Color>(Color.fromRGBO(0, 173, 181, 1)),
+                      minHeight: 5,
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      '${_progressValue.toStringAsFixed(0)}%',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        shadows: [
-                          Shadow(
-                            color: Colors.grey,
-                            blurRadius: 2,
-                            offset: Offset(1, 1),
-                          ),
-                        ],
-                      ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    '${_progressValue.toStringAsFixed(0)}%',
+                    style: const TextStyle(
+                      color: Color.fromRGBO(0, 173, 181, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      // shadows: [
+                      //   Shadow(
+                      //     color: Colors.grey,
+                      //     blurRadius: 2,
+                      //     offset: Offset(1, 1),
+                      //   ),
+                      // ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+
+          ],
         ),
       ),
     );
