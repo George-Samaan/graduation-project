@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flexa/UI/Pages/profile_screen.dart';
-import 'package:flexa/UI/Pages/search_bar.dart';
+import 'package:flexa/UI/Pages/search_bar.dart' as sb;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -231,7 +231,7 @@ class NavBar extends StatelessWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  SearchBar(),
+                                  sb.SearchBar(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             var begin = Offset(1.0, 0.0);
