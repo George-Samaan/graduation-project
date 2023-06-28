@@ -1,4 +1,3 @@
-import 'package:flexa/login_page.dart';
 import 'package:flutter/material.dart';
 import 'UI/Splash/splash_start.dart';
 

@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import '../shared.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
 import 'navbar.dart';
 
 class SearchBar extends StatefulWidget {
@@ -19,10 +18,6 @@ class _SearchBarState extends State<SearchBar> {
 
   bool _isSearching = false;
   String _previousSearchQuery = '';
-
-
-
-
 
   @override
   void initState() {

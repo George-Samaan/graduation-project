@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../components/transitions.dart';
 import '../../questionnaire.dart';
 import '../Pages/profile_screen.dart';
 import '../shared.dart';
@@ -179,24 +180,7 @@ class _SplashScreenState extends State<SplashScreen>
                       width: double.infinity,
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => QuestionnaireApp(),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                var begin = Offset(1.0, 0.0);
-                                var end = Offset.zero;
-                                var curve = Curves.ease;
-
-                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                            ),
-                          );
+                          Navigator.of(context).push(SlidePageRoute(child: QuestionnaireApp()));
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),),
@@ -222,22 +206,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => ProfileScreen(),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                var begin = Offset(1.0, 0.0);
-                                var end = Offset.zero;
-                                var curve = Curves.ease;
-                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                            ),
-                          );
+                          Navigator.of(context).push(SlidePageRoute(child: ProfileScreen()));
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flexa/components/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,24 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  //Map<String, dynamic> USERDATA = {};
-  @override
-  /*void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getUserResponse();
-  }
 
-  _getUserResponse() async
-  {
-    final prefs = await SharedPreferences.getInstance();
-    final USERDATAString = prefs.getString('USERDATA');
-    if (USERDATAString != null) {
-      setState(() {
-        USERDATA  = json.decode(USERDATAString);
-      });
-    }
-  }*/
+  @override
+
   bool _isLoading = false;
 
   PostDataLogIn(email, password) async {
@@ -46,26 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('USERDATA', USERDATAJson);
 
       // check here
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              SplashScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = Offset(1.0, 0.0);
-            var end = Offset.zero;
-            var curve = Curves.ease;
-
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        ),
-      );
+      Navigator.of(context).push(SlidePageRoute(child: SplashScreen()));
 
       print('Body of response ');
       print(Body);
@@ -276,28 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialButton(
                             height: 20,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      RegisterScreen(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
+                              Navigator.of(context).push(SlidePageRoute(child: RegisterScreen()));
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
@@ -330,14 +276,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     valueColor: AlwaysStoppedAnimation<Color>(
                         Color.fromRGBO(0, 173, 181, 1)),
                   ),
-                  // Text(
-                  //   'Loading...',
-                  //   style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.bold,
-                  //       color: Color.fromRGBO(0, 173, 181, 1),
-                  //   ),
-                  // ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.75),
                 ],
               ),

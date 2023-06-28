@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flexa/UI/Pages/profile_screen.dart';
-import 'package:flexa/UI/Pages/search_bar.dart' as sb;
+import 'package:flexa/UI/Pages/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../components/transitions.dart';
 import '../../questionnaire.dart';
 import '../Splash/splash00.dart';
 import 'favourite_food.dart';
@@ -106,28 +107,7 @@ class NavBar extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  ProfileScreen(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.of(context).push(SlidePageRoute(child: ProfileScreen()));
                     },
                   ),
                   Divider(
@@ -147,28 +127,7 @@ class NavBar extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  QuestionnaireApp(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.of(context).push(SlidePageRoute(child: QuestionnaireApp()));
                     },
                   ),
                   Divider(
@@ -186,28 +145,7 @@ class NavBar extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    FinalDiet(),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              var begin = Offset(1.0, 0.0);
-                              var end = Offset.zero;
-                              var curve = Curves.ease;
-
-                              var tween = Tween(begin: begin, end: end)
-                                  .chain(CurveTween(curve: curve));
-
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
+                        Navigator.of(context).push(SlidePageRoute(child: FinalDiet()));
                       }),
                   Divider(
                     color: Colors.grey,
@@ -226,28 +164,7 @@ class NavBar extends StatelessWidget {
                           fontSize: 20),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  sb.SearchBar(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.of(context).push(SlidePageRoute(child: SearchBar()));
                     },
                   ),
                   Divider(
@@ -264,28 +181,7 @@ class NavBar extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  FavFood(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.of(context).push(SlidePageRoute(child: FavFood()));
                     },
                   ),
                   Divider(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/transitions.dart';
 import '../../login_page.dart';
 import '../../register.dart';
 
@@ -19,7 +20,7 @@ class _SplashPageState extends State<SplashPage>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
 
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController);
@@ -71,29 +72,7 @@ class _SplashPageState extends State<SplashPage>
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation,
-                              secondaryAnimation) =>
-                              LoginScreen(),
-                          transitionsBuilder: (context, animation,
-                              secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
-                    },
+                      Navigator.of(context).push(SlidePageRoute(child: LoginScreen()));                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -114,28 +93,7 @@ class _SplashPageState extends State<SplashPage>
                   SizedBox(height: 25,),
                   MaterialButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation,
-                              secondaryAnimation) =>
-                              RegisterScreen(),
-                          transitionsBuilder: (context, animation,
-                              secondaryAnimation, child) {
-                            var begin = Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.of(context).push(SlidePageRoute(child: RegisterScreen()));
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
