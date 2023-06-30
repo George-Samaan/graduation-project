@@ -320,6 +320,9 @@ class _QuestionnaireAppState extends State<QuestionnaireApp> {
               if (value == null || value.isEmpty) {
                 return 'Please enter your age';
               }
+              if (int.parse(value) < 10) {
+                return 'Your age must be at least 10';
+              }
               return null;
             },
             onChanged: (value){
@@ -372,6 +375,9 @@ class _QuestionnaireAppState extends State<QuestionnaireApp> {
               if (value == null || value.isEmpty) {
                 return 'Please enter your weight';
               }
+              if (int.parse(value) < 40 )  {
+                return 'Your weight must be at least 40';
+              }
               return null;
             },
             onChanged: (value){
@@ -423,6 +429,9 @@ class _QuestionnaireAppState extends State<QuestionnaireApp> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your height';
+              }
+              if (int.parse(value) < 80) {
+                return 'Your height must be at least 80';
               }
               return null;
             },
